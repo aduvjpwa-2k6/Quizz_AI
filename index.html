@@ -1,0 +1,2049 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=yes"
+    />
+    <title>Ôn tập Học máy | Trắc nghiệm</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", "Inter", system-ui, sans-serif;
+        background: #f0f2f8;
+        color: #1e293b;
+        font-size: 14px;
+      }
+      .home-container {
+        max-width: 600px;
+        margin: 80px auto;
+        text-align: center;
+        background: white;
+        border-radius: 32px;
+        padding: 48px 32px;
+        box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1);
+      }
+      .home-container h1 {
+        font-size: 2rem;
+        color: #0f2b3d;
+        margin-bottom: 8px;
+      }
+      .mock-badge {
+        background: #eef2ff;
+        display: inline-block;
+        color: black;
+        padding: 6px 18px;
+        border-radius: 40px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin-bottom: 20px;
+      }
+      .info-row {
+        display: flex;
+        justify-content: center;
+        gap: 24px;
+        margin: 20px 0;
+      }
+      .info-item {
+        background: #f8fafc;
+        color: black;
+        padding: 8px 16px;
+        border-radius: 40px;
+      }
+      .start-btn {
+        background: #1a4a6f;
+        color: white;
+        border: none;
+        padding: 12px 32px;
+        border-radius: 60px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      .start-btn:hover {
+        background: #0f3550;
+      }
+      .history-summary {
+        margin-top: 40px;
+        text-align: left;
+      }
+      .history-summary h2 {
+        font-size: 1.2rem;
+        margin-bottom: 16px;
+      }
+      .history-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+      }
+      .history-table th,
+      .history-table td {
+        padding: 12px 16px;
+        border-bottom: 1px solid #eef2f8;
+      }
+      .history-table th {
+        background-color: #f8fafc;
+        font-weight: 600;
+        color: #475569;
+      }
+      .history-table tbody tr:hover {
+        background-color: #e2e8f0;
+      }
+      .history-table .review-link {
+        color: #1a4a6f;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .history-table .review-link:hover {
+        text-decoration: underline;
+      }
+      .exam-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 16px;
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+      .main-content {
+        flex: 2;
+        min-width: 280px;
+      }
+      .sidebar {
+        flex: 1;
+        min-width: 260px;
+        background: white;
+        border-radius: 20px;
+        padding: 16px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        height: fit-content;
+        position: sticky;
+        top: 16px;
+        max-height: calc(100vh - 32px);
+        display: flex;
+        flex-direction: column;
+      }
+      .hero {
+        background: linear-gradient(135deg, #0f2b3d 0%, #1a4a6f 100%);
+        border-radius: 20px;
+        padding: 14px 20px;
+        margin-bottom: 20px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        cursor: pointer;
+      }
+      .hero h1 {
+        font-size: 1.3rem;
+        font-weight: 700;
+      }
+      .timer {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 4px 12px;
+        border-radius: 40px;
+        font-weight: 700;
+        font-size: 1.1rem;
+      }
+      .result-panel {
+        background: white;
+        border-radius: 20px;
+        padding: 16px 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid #22c55e;
+        display: none;
+      }
+      .result-panel table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.85rem;
+      }
+      .result-panel td {
+        padding: 6px 8px;
+        border-bottom: 1px solid #eef2f8;
+      }
+      .result-panel td:first-child {
+        font-weight: 600;
+        width: 140px;
+        color: #475569;
+      }
+      .question-card {
+        background: white;
+        border-radius: 20px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 16px;
+      }
+      .question-text {
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.4;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #eef2f8;
+        white-space: pre-wrap;
+      }
+      .options-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .option-item {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 40px;
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 0.85rem;
+      }
+      .option-item.selected {
+        background: #e6f7ff;
+        border-color: #1a4a6f;
+      }
+      .option-item.correct-after {
+        background: #dcfce7;
+        border-color: #22c55e;
+      }
+      .option-item.wrong-after {
+        background: #fee2e2;
+        border-color: #ef4444;
+      }
+      .option-prefix {
+        font-weight: 700;
+        width: 28px;
+      }
+      .-area {
+        margin-top: 12px;
+        padding: 10px 16px;
+        border-radius: 16px;
+        font-size: 0.8rem;
+        display: none;
+      }
+      .-area.show {
+        display: block;
+      }
+      .-correct {
+        background: #dcfce7;
+        color: #166534;
+        border-left: 3px solid #22c55e;
+      }
+      .-wrong {
+        background: #fee2e2;
+        color: #991b1b;
+        border-left: 3px solid #ef4444;
+      }
+      .nav-bar-bottom {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 12px;
+        gap: 10px;
+      }
+      .nav-buttons {
+        display: flex;
+        gap: 12px;
+      }
+      .nav-btn {
+        background: white;
+        border: 1px solid #e2e8f0;
+        padding: 8px 20px;
+        border-radius: 40px;
+        font-weight: 600;
+        cursor: pointer;
+        font-size: 0.85rem;
+      }
+      .question-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+        max-height: 460px;
+        overflow-y: auto;
+        padding-right: 4px;
+        margin-bottom: 16px;
+      }
+      .q-num {
+        background: #f1f5f9;
+        border-radius: 10px;
+        padding: 8px 0;
+        text-align: center;
+        font-weight: 600;
+        font-size: 0.75rem;
+        cursor: pointer;
+      }
+      .q-num.selected {
+        background: #bfdbfe;
+        border: 1px solid #1a4a6f;
+      }
+      .q-num.correct {
+        background: #22c55e;
+        color: white;
+      }
+      .q-num.wrong {
+        background: #ef4444;
+        color: white;
+      }
+      .q-num.current {
+        border: 2px solid #1a4a6f;
+        background: #e6f7ff;
+      }
+      .submit-btn {
+        width: 100%;
+        background: #1a4a6f;
+        color: white;
+        padding: 10px;
+        border-radius: 40px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        border: none;
+        cursor: pointer;
+        margin-top: 8px;
+      }
+      .tabs {
+        display: flex;
+        gap: 8px;
+        margin: 12px 0 8px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      .tab-btn {
+        background: none;
+        border: none;
+        padding: 6px 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        color: #64748b;
+      }
+      .tab-btn.active {
+        color: #1a4a6f;
+        border-bottom: 2px solid #1a4a6f;
+      }
+      .tab-content {
+        display: none;
+        max-height: 300px;
+        overflow-y: auto;
+        margin-top: 8px;
+      }
+      .tab-content.active {
+        display: block;
+      }
+      .history-item {
+        background: #f8fafc;
+        padding: 8px 12px;
+        margin-bottom: 8px;
+        border-radius: 12px;
+        cursor: pointer;
+      }
+      .theme-switch {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #1a4a6f;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 1000;
+        font-size: 1.2rem;
+      }
+      body.dark-mode {
+        background: #0f172a;
+        color: #f1f5f9;
+      }
+      body.dark-mode .home-container,
+      body.dark-mode .sidebar,
+      body.dark-mode .result-panel,
+      body.dark-mode .question-card {
+        background: #1e293b;
+        color: #f1f5f9;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      }
+      body.dark-mode .history-table th {
+        background: #334155;
+        color: #cbd5e1;
+      }
+      body.dark-mode .history-table tbody tr:hover {
+        background-color: #334155;
+      }
+      body.dark-mode .history-table .review-link {
+        color: #60a5fa;
+      }
+      body.dark-mode .history-table td {
+        border-bottom: 1px solid #334155;
+      }
+      body.dark-mode .home-container h1,
+      body.dark-mode .result-panel td:first-child {
+        color: #f8fafc;
+      }
+      body.dark-mode .mock-badge,
+      body.dark-mode .info-item {
+        background: #334155;
+        color: #e2e8f0;
+      }
+      body.dark-mode .option-item {
+        background: #334155;
+        border-color: #475569;
+        color: #f1f5f9;
+      }
+      body.dark-mode .option-item:hover {
+        background: #475569;
+      }
+      body.dark-mode .option-item.selected {
+        background: #1e3a8a;
+        border-color: #3b82f6;
+      }
+      body.dark-mode .option-item.correct-after {
+        background: #166534;
+        border-color: #22c55e;
+      }
+      body.dark-mode .option-item.wrong-after {
+        background: #991b1b;
+        border-color: #ef4444;
+      }
+      body.dark-mode .nav-btn {
+        background: #334155;
+        border-color: #475569;
+        color: #f8fafc;
+      }
+      body.dark-mode .nav-btn:hover:not(:disabled) {
+        background: #475569;
+      }
+      body.dark-mode .nav-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      body.dark-mode .q-num {
+        background: #334155;
+        color: #f1f5f9;
+      }
+      body.dark-mode .q-num.selected {
+        background: #2563eb;
+        border-color: #60a5fa;
+      }
+      body.dark-mode .q-num.correct {
+        background: #22c55e;
+      }
+      body.dark-mode .q-num.wrong {
+        background: #ef4444;
+      }
+      body.dark-mode .q-num.current {
+        border-color: #60a5fa;
+        background: #1e3a8a;
+      }
+      body.dark-mode .question-text,
+      body.dark-mode .wrong-item {
+        border-bottom-color: #475569;
+      }
+      body.dark-mode .history-item {
+        background: #334155;
+      }
+      body.dark-mode .history-item:hover {
+        background: #475569;
+      }
+      body.dark-mode .history-item .score {
+        color: #60a5fa;
+      }
+      body.dark-mode .wrong-item a {
+        color: #60a5fa;
+      }
+
+      body.dark-mode .tab-btn.active {
+        color: #93c5fd;
+        border-bottom-color: #93c5fd;
+      }
+      body.dark-mode .tabs {
+        border-bottom-color: #475569;
+      }
+      @media (max-width: 850px) {
+        .exam-container {
+          flex-direction: column;
+        }
+        .sidebar {
+          position: static;
+        }
+      }
+      /* Bổ sung cho chức năng hiển thị kết quả ngay */
+      .instant-switch {
+        position: relative;
+        display: inline-block;
+        width: 36px;
+        height: 20px;
+        flex-shrink: 0;
+        margin-left: 10px;
+      }
+      .instant-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .instant-slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+      .instant-slider:before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+      input:checked + .instant-slider {
+        background-color: #55b244;
+      }
+      input:focus + .instant-slider {
+        box-shadow: 0 0 1px #55b244;
+      }
+      input:checked + .instant-slider:before {
+        -webkit-transform: translateX(16px);
+        -ms-transform: translateX(16px);
+        transform: translateX(16px);
+      }
+      .instant-slider.instant-round {
+        border-radius: 20px;
+      }
+      .instant-slider.instant-round:before {
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="theme-switch" id="themeSwitch">🌙</button>
+
+    <div id="homePage" class="home-container">
+      <div class="tabs" style="justify-content: center; margin-bottom: 24px">
+        <button class="tab-btn active" data-tab="new-exam">Trang chủ</button>
+        <button class="tab-btn" data-tab="history-summary">Lịch sử</button>
+      </div>
+      <div id="new-examTab" class="tab-content active">
+        <div class="mock-badge">Ôn tập</div>
+        <h1>Ôn tập Học máy</h1>
+        <div class="info-row">
+          <div class="info-item" id="infoQuestions">📄 64 câu</div>
+          <div class="info-item" id="infoTime">⏱️ 60 phút</div>
+          <div class="info-item">🎯 Tự động chấm</div>
+        </div>
+        <div style="margin: 20px 0">
+          <label for="questionSetSelect" style="font-weight: 600"
+            >Chọn bộ đề:</label
+          >
+          <select
+            id="questionSetSelect"
+            style="padding: 10px 16px; border-radius: 20px; margin-left: 10px"
+            onchange="updateInfo()"
+          >
+            <option value="0">Tất cả 5 phần (64 câu)</option>
+            <option value="1">Phần 1: Hồi quy tuyến tính (15 câu)</option>
+            <option value="2">Phần 2: Perceptron (13 câu)</option>
+            <option value="3">Phần 3: Gradient Descent (9 câu)</option>
+            <option value="4">Phần 4: Logistic Regression (12 câu)</option>
+            <option value="5">Phần 5: Softmax Regression (15 câu)</option>
+          </select>
+        </div>
+        <script>
+          function updateInfo() {
+            const v = document.getElementById("questionSetSelect").value;
+            const counts = { 0: 64, 1: 15, 2: 13, 3: 9, 4: 12, 5: 15 };
+            const mins = { 0: 60, 1: 15, 2: 15, 3: 10, 4: 15, 5: 15 };
+            document.getElementById("infoQuestions").innerText =
+              "📄 " + counts[v] + " câu";
+            document.getElementById("infoTime").innerText =
+              "⏱️ " + mins[v] + " phút";
+          }
+        </script>
+        <button class="start-btn" id="startExamBtn">Bắt đầu làm bài →</button>
+      </div>
+      <div id="history-summaryTab" class="tab-content">
+        <div class="history-summary">
+          <h2>📋 Lịch sử thi</h2>
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Lần</th>
+                <th>Trạng thái</th>
+                <th>Điểm /100</th>
+                <th>Xem lại</th>
+              </tr>
+            </thead>
+            <tbody id="historySummaryBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div id="examPage" style="display: none">
+      <div class="exam-container">
+        <div class="main-content">
+          <div class="hero" id="backToHomeBtn">
+            <div>
+              <h1>📘 ÔN TẬP & KIỂM TRA</h1>
+              <p>Hệ thống Ôn tập & Thi thử • Học máy</p>
+            </div>
+            <div class="timer" id="timerDisplay">20:00</div>
+          </div>
+          <div id="resultPanel" class="result-panel">
+            <table>
+              <tr>
+                <td>Bắt đầu</td>
+                <td id="startTimeStr">-</td>
+              </tr>
+              <tr>
+                <td>Kết thúc</td>
+                <td id="endTimeStr">-</td>
+              </tr>
+              <tr>
+                <td>Thời gian</td>
+                <td id="durationStr">-</td>
+              </tr>
+              <tr>
+                <td>Điểm</td>
+                <td id="scoreDetail">-</td>
+              </tr>
+              <tr>
+                <td>Điểm %</td>
+                <td id="scorePercent">-</td>
+              </tr>
+            </table>
+          </div>
+          <div class="question-card">
+            <div class="question-text" id="questionText">Đang tải...</div>
+            <div class="options-list" id="optionsContainer"></div>
+            <div class="-area" id="Area"></div>
+            <div class="nav-bar-bottom">
+              <div class="nav-buttons">
+                <button class="nav-btn" id="prevBtn">◀ Trước</button
+                ><button class="nav-btn" id="nextBtn">Sau ▶</button
+                ><button
+                  class="nav-btn"
+                  id="submitBtnBottom"
+                  style="display: none; background: #1a4a6f; color: white"
+                >
+                  📥 Nộp bài
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sidebar">
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 12px;
+              margin-bottom: 12px;
+            "
+          >
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <strong>📋 DANH SÁCH CÂU</strong
+              ><span
+                id="answeredCounter"
+                style="
+                  background: #eef2ff;
+                  color: black;
+                  padding: 2px 8px;
+                  border-radius: 20px;
+                "
+                >0/0</span
+              >
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-size: 0.9em;
+              "
+            >
+              <span>Hiển thị kết quả ngay sau khi trả lời</span>
+              <label class="instant-switch">
+                <input type="checkbox" id="instantResultToggle" />
+                <span class="instant-slider instant-round"></span>
+              </label>
+            </div>
+          </div>
+          <div id="questionGrid" class="question-grid"></div>
+          <button class="submit-btn" id="submitExamBtn">📥 NỘP BÀI</button>
+          <button
+            class="nav-btn"
+            id="goToHomeBtn"
+            style="width: 100%; margin-top: 12px"
+          >
+            Về trang chủ
+          </button>
+          <button
+            class="nav-btn"
+            id="goToHistoryBtn"
+            style="width: 100%; margin-top: 8px"
+          >
+            Lịch sử thi
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // ---------- BỘ CÂU HỎI: 5 phần (xem de-thi.json) ----------
+      const QUIZ_DATA = {
+  "title": "Ôn tập Học máy",
+  "sections": [
+    {
+      "id": 1,
+      "title": "Hồi quy tuyến tính",
+      "questions": [
+        {
+          "text": "Hồi quy tuyến tính được dùng để dự đoán",
+          "options": [
+            "nhãn lớp rời rạc.",
+            "xác suất mẫu thuộc mỗi lớp.",
+            "cụm mà mỗi điểm dữ liệu thuộc về.",
+            "một giá trị số thực liên tục."
+          ],
+          "correct": 3
+        },
+        {
+          "text": "Hàm mất mát thường dùng khi huấn luyện mô hình hồi quy tuyến tính là",
+          "options": [
+            "sai số bình phương trung bình (MSE).",
+            "hàm mất mát 0-1.",
+            "cross-entropy.",
+            "hinge loss."
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Trong mô hình ŷ = w₀ + w₁x, hệ số w₀ được gọi là",
+          "options": [
+            "hệ số góc.",
+            "hệ số tự do (bias).",
+            "tốc độ học.",
+            "phần dư."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Với ma trận dữ liệu X (đã thêm cột toàn số 1) và vector nhãn y, nghiệm của hồi quy tuyến tính theo phương trình chuẩn (normal equation) là",
+          "options": [
+            "w = (XXᵀ)⁻¹Xy.",
+            "w = (XᵀX)⁻¹Xᵀy.",
+            "w = Xᵀy.",
+            "w = (XᵀX)Xᵀy."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Khi thêm vào tập dữ liệu một điểm ngoại lai (outlier) nằm rất xa các điểm còn lại, đường hồi quy tìm được bằng cách tối thiểu hóa MSE sẽ",
+          "options": [
+            "không thay đổi vì MSE lấy trung bình trên toàn bộ dữ liệu.",
+            "bị kéo lệch đáng kể về phía điểm ngoại lai vì sai số được bình phương.",
+            "trở thành đường nằm ngang.",
+            "luôn đi qua đúng điểm ngoại lai đó."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Mô hình dự đoán giá nhà theo khoảng cách đến trung tâm (km) có hệ số w₁ = −2 (đơn vị: trăm triệu đồng). Ý nghĩa của hệ số này là",
+          "options": [
+            "khi nhà xa trung tâm thêm 1 km, giá dự đoán giảm 2 trăm triệu đồng.",
+            "khoảng cách đến trung tâm không ảnh hưởng đến giá nhà.",
+            "giá nhà tại trung tâm là −2 trăm triệu đồng.",
+            "khi nhà xa trung tâm thêm 1 km, giá dự đoán giảm đi 2 lần."
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Phương trình chuẩn có thể không dùng được khi số đặc trưng rất lớn hoặc các đặc trưng phụ thuộc tuyến tính với nhau, vì",
+          "options": [
+            "phương trình chuẩn chỉ dùng cho bài toán phân loại.",
+            "hàm MSE khi đó không còn là hàm lồi.",
+            "phương trình chuẩn đòi hỏi phải chọn tốc độ học.",
+            "ma trận XᵀX có thể không khả nghịch và việc tính nghịch đảo rất tốn kém."
+          ],
+          "correct": 3
+        },
+        {
+          "text": "Mô hình dự đoán giá nhà (triệu đồng): ŷ = 500 + 30S − 20K, trong đó S là diện tích (m²) và K là khoảng cách đến trung tâm (km). Giá dự đoán của căn nhà 80 m², cách trung tâm 5 km là",
+          "options": [
+            "2400 triệu đồng.",
+            "2900 triệu đồng.",
+            "2800 triệu đồng.",
+            "3000 triệu đồng."
+          ],
+          "correct": 2,
+          "explanation": "ŷ = 500 + 30·80 − 20·5 = 500 + 2400 − 100 = 2800."
+        },
+        {
+          "type": "fill",
+          "text": "Cho mô hình ŷ = 3 + 2x và điểm dữ liệu (x; y) = (4; 13). Tính phần sai số e = y − ŷ tại điểm này.",
+          "answer": 2,
+          "explanation": "ŷ = 3 + 2·4 = 11 ⇒ e = 13 − 11 = 2."
+        },
+        {
+          "type": "fill",
+          "text": "Cho mô hình ŷ = 1 + 2x và 3 điểm dữ liệu (x; y): (1; 5), (2; 3), (3; 9). Tính sai số bình phương trung bình MSE của mô hình trên 3 điểm này.",
+          "answer": 4,
+          "explanation": "ŷ = 3, 5, 7 ⇒ sai số = 2, −2, 2 ⇒ MSE = (4 + 4 + 4)/3 = 4."
+        },
+        {
+          "type": "fill",
+          "text": "Mô hình hồi quy không có hệ số tự do ŷ = wx được huấn luyện trên 3 điểm (x; y): (1; 3), (2; 4), (2; 8). Tìm w tối ưu theo phương pháp bình phương tối thiểu.",
+          "answer": 3,
+          "explanation": "w = Σxy / Σx² = (1·3 + 2·4 + 2·8)/(1 + 4 + 4) = 27/9 = 3."
+        },
+        {
+          "text": "Tập dữ liệu huấn luyện cho bài toán dự đoán giá nhà là tập dữ liệu bao gồm",
+          "options": [
+            "các đặc trưng của các ngôi nhà: diện tích, số phòng, khoảng cách tới trung tâm, ...",
+            "các đặc trưng của các ngôi nhà và giá nhà: diện tích, số phòng, khoảng cách tới trung tâm, ..., giá nhà."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Đâu là dạng hồi quy tuyến tính?",
+          "options": [
+            "y = (w₀, w₁, w₂, w₃) · (x₁, x₂, x₃)",
+            "y = w₁x₁ + w₂x₂ + w₃x₃",
+            "y = (w₀, w₁, w₂, w₃) · (1, x₁, x₂, x₃)",
+            "y = w₀ + w₁x₁ + w₂x₂ + w₃x₃"
+          ],
+          "correct": [
+            2,
+            3
+          ]
+        },
+        {
+          "text": "Đâu là hàm tối ưu (hàm mất mát thông tin) của giải thuật hồi quy tuyến tính?",
+          "options": [
+            "Σ(yᵢ − x̄ᵢw) → Min",
+            "|Σ(yᵢ − x̄ᵢw)| → Min",
+            "Σ(yᵢ − x̄ᵢw)² → Min",
+            "{Σ(yᵢ − x̄ᵢw)}² → Min"
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Cho hàm mất mát L(w) = ½ Σᵢ₌₁ᴺ (yᵢ − x̄ᵢw)². Hãy cho biết khẳng định nào sau đây đúng?",
+          "options": [
+            "Hàm trên không có điểm cực trị.",
+            "Hàm trên có 1 điểm cực đại và một điểm cực tiểu.",
+            "Hàm trên có 1 điểm cực tiểu.",
+            "Hàm trên có 1 điểm cực đại."
+          ],
+          "correct": 2
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Perceptron",
+      "questions": [
+        {
+          "text": "Hàm kích hoạt được dùng ở đầu ra của perceptron trong thuật toán PLA là",
+          "options": [
+            "hàm sigmoid.",
+            "hàm softmax.",
+            "hàm dấu sign (hàm bậc thang).",
+            "hàm ReLU."
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Với nhãn y ∈ {−1; +1}, khi điểm (x; y) bị phân loại sai, PLA cập nhật trọng số theo công thức",
+          "options": [
+            "w ← yw.",
+            "w ← w + x.",
+            "w ← w − yx.",
+            "w ← w + yx."
+          ],
+          "correct": 3
+        },
+        {
+          "text": "Thuật toán PLA được đảm bảo dừng sau hữu hạn bước khi",
+          "options": [
+            "dữ liệu đã được chuẩn hóa.",
+            "dữ liệu huấn luyện tách được tuyến tính.",
+            "số mẫu huấn luyện là số chẵn.",
+            "tốc độ học đủ nhỏ."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Trong không gian đặc trưng 2 chiều, đường biên quyết định của PLA là",
+          "options": [
+            "một đường gấp khúc.",
+            "một đường thẳng.",
+            "một đường tròn.",
+            "một parabol."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Nếu dữ liệu huấn luyện không tách được tuyến tính, thuật toán PLA (không giới hạn số vòng lặp) sẽ",
+          "options": [
+            "tự dừng sau đúng 1 epoch.",
+            "báo lỗi chia cho 0.",
+            "hội tụ đến nghiệm có ít lỗi nhất.",
+            "lặp mãi không dừng, trọng số dao động liên tục."
+          ],
+          "correct": 3
+        },
+        {
+          "text": "Mục đích của việc thêm thành phần x₀ = 1 vào vector đặc trưng là",
+          "options": [
+            "tránh trường hợp chia cho 0.",
+            "giúp thuật toán hội tụ nhanh gấp đôi.",
+            "học được hệ số tự do (bias) để đường biên không bắt buộc đi qua gốc tọa độ.",
+            "chuẩn hóa dữ liệu về khoảng [0; 1]."
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Một perceptron đơn (PLA) không thể học được hàm logic nào sau đây?",
+          "options": [
+            "AND.",
+            "NAND.",
+            "XOR.",
+            "OR."
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Chạy PLA hai lần trên cùng một tập dữ liệu tách được tuyến tính nhưng với thứ tự duyệt điểm khác nhau. Kết quả có thể là",
+          "options": [
+            "cả hai lần đều cho đường biên có lề (margin) lớn nhất.",
+            "luôn cho cùng một vector w duy nhất.",
+            "một lần hội tụ và một lần không hội tụ.",
+            "hai vector w khác nhau, cả hai đều phân loại đúng toàn bộ tập huấn luyện."
+          ],
+          "correct": 3
+        },
+        {
+          "text": "Sau khi PLA cập nhật w ← w + yx cho một điểm (x; y) bị phân loại sai, giá trị y·(wᵀx) tại chính điểm đó thay đổi như thế nào?",
+          "options": [
+            "Giảm đi ‖x‖².",
+            "Không thay đổi.",
+            "Tăng thêm đúng 1.",
+            "Tăng thêm đúng ‖x‖²."
+          ],
+          "correct": 3,
+          "explanation": "y·(w + yx)ᵀx = y·wᵀx + y²‖x‖² = y·wᵀx + ‖x‖² (vì y² = 1)."
+        },
+        {
+          "text": "Perceptron có w = (w₀; w₁; w₂) = (−3; 2; 1). Điểm nào sau đây được phân vào lớp +1?",
+          "options": [
+            "(x₁; x₂) = (0; 1).",
+            "(x₁; x₂) = (1; 0).",
+            "(x₁; x₂) = (1; 2).",
+            "(x₁; x₂) = (0; 2)."
+          ],
+          "correct": 2,
+          "explanation": "wᵀx̄ = −3 + 2x₁ + x₂. Với (1; 2): −3 + 2 + 2 = 1 > 0 ⇒ lớp +1. Các điểm còn lại cho giá trị âm."
+        },
+        {
+          "type": "fill",
+          "text": "Perceptron w = (w₀; w₁; w₂) = (0; 1; −1) với w₀ là hệ số tự do (bias). Xét điểm x = (x₁; x₂) = (2; 3) có nhãn y = +1. Sau một bước cập nhật của PLA tại điểm này, giá trị mới của w₁ là bao nhiêu?",
+          "answer": 3,
+          "explanation": "x̄ = (1; 2; 3), wᵀx̄ = 0 + 2 − 3 = −1 ⇒ phân loại sai. w ← w + yx̄ = (1; 3; 2) ⇒ w₁ = 3."
+        },
+        {
+          "type": "fill",
+          "text": "Chạy PLA với khởi tạo w = (0; 0; 0) (gồm hệ số tự do w₀), coi y · wᵀx ≤ 0 là phân loại sai. Lần lượt duyệt 2 điểm: điểm thứ nhất (x₁; x₂) = (1; 2) có nhãn +1, điểm thứ hai (x₁; x₂) = (3; 1) có nhãn −1. Sau khi duyệt xong 2 điểm, w₁ bằng bao nhiêu?",
+          "answer": -2,
+          "explanation": "Điểm 1: y·wᵀx̄ = 0 ⇒ sai ⇒ w = (1; 1; 2). Điểm 2: x̄ = (1; 3; 1), wᵀx̄ = 6, y = −1 ⇒ sai ⇒ w = (1; 1; 2) − (1; 3; 1) = (0; −2; 1) ⇒ w₁ = −2."
+        },
+        {
+          "type": "fill",
+          "text": "Perceptron có w = (w₀; w₁; w₂) = (−1; 1; 1). Cho 5 điểm (x₁; x₂; y): (2; 0; +1), (0; 0; +1), (1; 1; −1), (0; 3; +1), (−1; 0; −1). Có bao nhiêu điểm bị phân loại sai?",
+          "answer": 2,
+          "explanation": "wᵀx̄ = −1 + x₁ + x₂. (2;0) → 1, y = +1 đúng; (0;0) → −1, y = +1 sai; (1;1) → 1, y = −1 sai; (0;3) → 2, y = +1 đúng; (−1;0) → −2, y = −1 đúng. Vậy có 2 điểm sai."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Gradient Descent",
+      "questions": [
+        {
+          "text": "Quy tắc cập nhật tham số của thuật toán Gradient Descent để cực tiểu hóa hàm J(w) là",
+          "options": [
+            "w ← w + η∇J(w).",
+            "w ← w − η∇J(w).",
+            "w ← η∇J(w).",
+            "w ← w − ∇J(w)/η."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Trong Gradient Descent, tham số η được gọi là",
+          "options": [
+            "hệ số momentum.",
+            "hệ số regularization.",
+            "tốc độ học (learning rate).",
+            "độ dốc của hàm mất mát."
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Vector gradient của hàm số f tại một điểm chỉ theo hướng mà tại đó",
+          "options": [
+            "f tăng nhanh nhất.",
+            "f giảm nhanh nhất.",
+            "f không đổi.",
+            "f đạt cực tiểu toàn cục."
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Khi chọn tốc độ học η quá lớn, Gradient Descent thường",
+          "options": [
+            "dao động quanh điểm cực tiểu hoặc phân kỳ.",
+            "làm gradient bằng 0 ngay sau bước đầu.",
+            "luôn tìm được cực tiểu toàn cục.",
+            "hội tụ rất chậm nhưng chắc chắn."
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Chuẩn hóa các đặc trưng về cùng thang đo giúp Gradient Descent hội tụ nhanh hơn vì",
+          "options": [
+            "các đường đồng mức của hàm mất mát gần tròn hơn, tránh việc đi zíc zắc.",
+            "tốc độ học được tự động tăng lên.",
+            "số lượng tham số cần học giảm đi.",
+            "hàm mất mát không lồi trở thành hàm lồi."
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Khi áp dụng Gradient Descent cho một hàm mất mát không lồi, phát biểu nào sau đây đúng?",
+          "options": [
+            "Thuật toán không bao giờ hội tụ.",
+            "Thuật toán có thể dừng ở cực tiểu địa phương, tùy thuộc vào điểm khởi tạo.",
+            "Thuật toán luôn tìm được cực tiểu toàn cục.",
+            "Thuật toán chỉ chạy được khi η = 1."
+          ],
+          "correct": 1
+        },
+        {
+          "type": "fill",
+          "text": "Áp dụng Gradient Descent cho hàm f(x) = x² với điểm khởi tạo x₀ = 3 và tốc độ học η = 0,5. Tính giá trị x sau 1 bước cập nhật.",
+          "answer": 0,
+          "explanation": "f′(x) = 2x ⇒ x₁ = 3 − 0,5·2·3 = 0."
+        },
+        {
+          "type": "fill",
+          "text": "Áp dụng Gradient Descent cho hàm f(x) = (x − 5)² với x₀ = 1 và η = 0,25. Tính giá trị x sau 2 bước cập nhật.",
+          "answer": 4,
+          "explanation": "f′(x) = 2(x − 5). x₁ = 1 − 0,25·2·(−4) = 3; x₂ = 3 − 0,25·2·(−2) = 4."
+        },
+        {
+          "type": "fill",
+          "text": "Mô hình ŷ = wx với hàm mất mát J(w) = (1/n) Σᵢ (wxᵢ − yᵢ)², dữ liệu gồm 2 điểm (x; y): (1; 2), (2; 4). Khởi tạo w = 0, η = 0,1. Tính w sau 1 bước Gradient Descent.",
+          "answer": 1,
+          "explanation": "∇J = (2/n) Σ (wxᵢ − yᵢ)xᵢ = (2/2)·[(−2)·1 + (−4)·2] = −10 ⇒ w = 0 − 0,1·(−10) = 1."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Logistic Regression",
+      "questions": [
+        {
+          "text": "Hàm sigmoid được sử dụng trong hồi quy logistic có công thức",
+          "options": [
+            "σ(z) = 1 / (1 + e⁻ᶻ).",
+            "σ(z) = max(0; z).",
+            "σ(z) = sign(z).",
+            "σ(z) = eᶻ."
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Đầu ra của mô hình hồi quy logistic được hiểu là",
+          "options": [
+            "chỉ số cụm của mẫu.",
+            "xác suất để mẫu thuộc lớp dương (y = 1).",
+            "khoảng cách từ mẫu đến đường biên.",
+            "một giá trị thực bất kỳ trên trục số."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Hàm mất mát chuẩn khi huấn luyện mô hình hồi quy logistic là",
+          "options": [
+            "hàm mất mát 0-1.",
+            "cross-entropy nhị phân (log loss).",
+            "hinge loss.",
+            "sai số bình phương trung bình (MSE)."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Tập giá trị của hàm sigmoid σ(z) là",
+          "options": [
+            "khoảng (−1; 1).",
+            "nửa khoảng [0; +∞).",
+            "khoảng (0; 1).",
+            "toàn bộ tập số thực ℝ."
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Với ngưỡng phân loại 0,5, đường biên quyết định của hồi quy logistic là tập các điểm thỏa mãn",
+          "options": [
+            "wᵀx = 1.",
+            "σ(wᵀx) = 0.",
+            "wᵀx = 0.",
+            "wᵀx = 0,5."
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Gradient của hàm mất mát cross-entropy theo w, tính trên một mẫu (x; y) với p = σ(wᵀx), là",
+          "options": [
+            "p(1 − p).",
+            "yx.",
+            "(y − wᵀx)²x.",
+            "(p − y)x."
+          ],
+          "correct": 3
+        },
+        {
+          "text": "Lý do chính để dùng cross-entropy thay cho MSE khi huấn luyện hồi quy logistic là",
+          "options": [
+            "cross-entropy luôn bằng 0 tại nghiệm tối ưu.",
+            "cross-entropy kết hợp với sigmoid cho hàm mất mát lồi và gradient không bị triệt tiêu khi mô hình dự đoán sai nặng.",
+            "MSE chỉ áp dụng được cho dữ liệu ảnh.",
+            "MSE không thể tính được với đầu ra là xác suất."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Hai mẫu có giá trị z = wᵀx lần lượt là z₁ = 3 và z₂ = −3. Gọi p₁ = σ(z₁), p₂ = σ(z₂). Khẳng định nào sau đây đúng?",
+          "options": [
+            "p₁ − p₂ = 1.",
+            "p₁ = p₂.",
+            "p₁ + p₂ = 1.",
+            "p₁ = 3p₂."
+          ],
+          "correct": 2,
+          "explanation": "σ(−z) = 1 − σ(z) nên p₁ + p₂ = σ(3) + σ(−3) = 1."
+        },
+        {
+          "type": "fill",
+          "text": "Mô hình dự đoán khả năng thi đậu: P(đậu) = σ(−4 + 2x), với x là số giờ ôn tập. Tính xác suất đậu (theo phần trăm, làm tròn đến số nguyên gần nhất) của sinh viên ôn tập 3 giờ.",
+          "answer": 88,
+          "unit": "%",
+          "explanation": "σ(−4 + 2·3) = σ(2) = 1/(1 + e⁻²) ≈ 0,881 ≈ 88%."
+        },
+        {
+          "type": "fill",
+          "text": "Một mẫu có nhãn y = 1 và mô hình dự đoán p = 0,25. Tính giá trị hàm mất mát cross-entropy của mẫu này, sử dụng logarit cơ số 2.",
+          "answer": 2,
+          "explanation": "L = −log₂(0,25) = 2."
+        },
+        {
+          "type": "fill",
+          "text": "Hồi quy logistic khởi tạo w = (w₀; w₁) = (0; 0). Một mẫu có vector đặc trưng (đã thêm x₀ = 1) là x = (1; 4) và nhãn y = 1. Thực hiện 1 bước Gradient Descent với η = 1 trên mẫu này. Tính w₁ sau khi cập nhật.",
+          "answer": 2,
+          "explanation": "p = σ(0) = 0,5; ∇ = (p − y)x = −0,5·(1; 4) = (−0,5; −2); w ← w − η∇ = (0,5; 2) ⇒ w₁ = 2."
+        },
+        {
+          "type": "fill",
+          "text": "Mô hình P(đậu) = σ(−6 + 2x) với x là số giờ ôn tập. Sinh viên cần ôn tập bao nhiêu giờ để xác suất đậu đúng bằng 0,5?",
+          "answer": 3,
+          "explanation": "σ(z) = 0,5 ⇔ z = 0 ⇔ −6 + 2x = 0 ⇒ x = 3."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Softmax Regression",
+      "questions": [
+        {
+          "text": "Hồi quy softmax được sử dụng cho bài toán",
+          "options": [
+            "hồi quy giá trị liên tục.",
+            "phân loại nhiều lớp.",
+            "phân cụm dữ liệu.",
+            "giảm số chiều dữ liệu."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Xác suất mẫu thuộc lớp k trong hồi quy softmax với K lớp được tính bằng công thức",
+          "options": [
+            "P(k | x) = max(z₁; …; z_K).",
+            "P(k | x) = σ(z_k).",
+            "P(k | x) = e^(z_k) / Σⱼ e^(z_j).",
+            "P(k | x) = z_k / Σⱼ z_j."
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Tổng các xác suất đầu ra của hàm softmax với K lớp luôn bằng",
+          "options": [
+            "K − 1.",
+            "0.",
+            "K.",
+            "1."
+          ],
+          "correct": 3
+        },
+        {
+          "text": "Bài toán có 4 lớp được đánh số 1, 2, 3, 4. Mã hóa one-hot của nhãn lớp 2 là",
+          "options": [
+            "(1; 1; 0; 0).",
+            "(2; 0; 0; 0).",
+            "(1; 0; 0; 0).",
+            "(0; 1; 0; 0)."
+          ],
+          "correct": 3
+        },
+        {
+          "text": "Cộng cùng một hằng số c vào tất cả các điểm số z₁, z₂, …, z_K trước khi đưa vào hàm softmax thì các xác suất đầu ra",
+          "options": [
+            "không thay đổi.",
+            "có tổng khác 1.",
+            "đều được nhân với e^c.",
+            "đều tăng thêm c."
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Khi số lớp K = 2, hồi quy softmax tương đương với mô hình nào?",
+          "options": [
+            "Thuật toán K-means.",
+            "Hồi quy logistic.",
+            "Hồi quy tuyến tính.",
+            "Perceptron (PLA)."
+          ],
+          "correct": 1
+        },
+        {
+          "text": "Với hàm mất mát cross-entropy và nhãn one-hot y, đạo hàm của hàm mất mát theo điểm số z_k bằng",
+          "options": [
+            "p_k − y_k.",
+            "z_k − y_k.",
+            "−log p_k.",
+            "p_k(1 − p_k)."
+          ],
+          "correct": 0
+        },
+        {
+          "text": "Khi cài đặt hàm softmax, người ta thường trừ max(z) khỏi mọi z_k trước khi tính hàm mũ để",
+          "options": [
+            "làm xác suất của lớp lớn nhất bằng 1.",
+            "tăng độ chính xác phân loại.",
+            "tránh tràn số khi tính e^z, trong khi kết quả không thay đổi.",
+            "thay thế cho regularization."
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Trong hồi quy softmax, đường biên quyết định giữa hai lớp i và j là",
+          "options": [
+            "không tồn tại vì mô hình là phi tuyến.",
+            "siêu phẳng luôn đi qua gốc tọa độ.",
+            "siêu phẳng (wᵢ − wⱼ)ᵀx = 0.",
+            "một mặt cong bậc hai."
+          ],
+          "correct": 2
+        },
+        {
+          "text": "Một mẫu thuộc lớp 2, mô hình softmax 3 lớp đang dự đoán p = (0,7; 0,2; 0,1). Sau một bước Gradient Descent trên mẫu này, nhận xét nào đúng về sự thay đổi điểm số z_k = w_kᵀx của mẫu?",
+          "options": [
+            "z₂ tăng, còn z₁ và z₃ giảm.",
+            "z₁ tăng vì p₁ đang lớn nhất.",
+            "Cả ba z₁, z₂, z₃ đều tăng.",
+            "Không có thay đổi vì mô hình đã dự đoán lớp 1."
+          ],
+          "correct": 0,
+          "explanation": "Đạo hàm theo z_k là p_k − y_k: z₁ → 0,7 > 0, z₂ → 0,2 − 1 = −0,8 < 0, z₃ → 0,1 > 0. Gradient Descent trừ đi đạo hàm nên z₂ tăng, z₁ và z₃ giảm."
+        },
+        {
+          "text": "Một mẫu thuộc lớp 1. Mô hình A dự đoán p = (0,5; 0,3; 0,2), mô hình B dự đoán p = (0,5; 0,5; 0). So sánh giá trị hàm mất mát cross-entropy của hai mô hình trên mẫu này.",
+          "options": [
+            "Mô hình B có mất mát nhỏ hơn.",
+            "Mô hình B có mất mát bằng vô cùng vì có xác suất bằng 0.",
+            "Hai giá trị bằng nhau.",
+            "Mô hình A có mất mát nhỏ hơn."
+          ],
+          "correct": 2,
+          "explanation": "Mẫu thuộc lớp 1 nên chỉ xét p₁ = 0,5 ở cả hai mô hình ⇒ L = −log 0,5 như nhau."
+        },
+        {
+          "type": "fill",
+          "text": "Một mẫu có các điểm số z = (z₁; z₂; z₃) = (2; 1; 0). Tính xác suất mẫu thuộc lớp 1 theo hàm softmax (theo phần trăm, làm tròn đến số nguyên gần nhất).",
+          "answer": 67,
+          "unit": "%",
+          "explanation": "e² / (e² + e¹ + e⁰) = 7,389 / 11,107 ≈ 0,665 ≈ 67%."
+        },
+        {
+          "type": "fill",
+          "text": "Hồi quy softmax nhận dạng chữ số viết tay MNIST: mỗi ảnh 28 × 28 pixel được trải thành vector đặc trưng, có 10 lớp, mỗi lớp có thêm một hệ số chặn. Tổng số tham số của mô hình là bao nhiêu?",
+          "answer": 7850,
+          "explanation": "10 lớp × (784 + 1) = 7850."
+        },
+        {
+          "type": "fill",
+          "text": "Mô hình softmax có 3 lớp với các vector trọng số (gồm hệ số tự do ở vị trí đầu): w₁ = (1; 2; 0), w₂ = (0; 1; 2), w₃ = (2; −1; 1). Với mẫu x = (1; 2; 3) (đã thêm x₀ = 1), mô hình dự đoán mẫu thuộc lớp số mấy?",
+          "answer": 2,
+          "explanation": "z₁ = 1·1 + 2·2 + 0·3 = 5; z₂ = 0 + 2 + 6 = 8; z₃ = 2 − 2 + 3 = 3 ⇒ z₂ lớn nhất ⇒ lớp 2."
+        },
+        {
+          "type": "fill",
+          "text": "Ma trận nhầm lẫn của mô hình softmax 3 lớp trên tập kiểm tra (hàng là lớp thật, cột là lớp dự đoán): hàng 1: (9; 1; 0), hàng 2: (1; 7; 2), hàng 3: (0; 2; 8). Tính độ chính xác (accuracy) theo phần trăm.",
+          "answer": 80,
+          "unit": "%",
+          "explanation": "Số mẫu đúng = 9 + 7 + 8 = 24 trên tổng 30 mẫu ⇒ accuracy = 80%."
+        }
+      ]
+    }
+  ]
+};
+      const QUESTION_BANK = QUIZ_DATA.sections.flatMap((s) =>
+        s.questions.map((q) => ({ ...q, section: s.id, sectionTitle: s.title })),
+      );
+      const TIME_MIN = { 0: 60, 1: 15, 2: 15, 3: 10, 4: 15, 5: 15 };
+
+      function getQuestionSet(
+        setVal = document.getElementById("questionSetSelect").value,
+      ) {
+        if (setVal === "0") return [...QUESTION_BANK];
+        return QUESTION_BANK.filter((q) => String(q.section) === String(setVal));
+      }
+
+      function parseNum(s) {
+        if (typeof s !== "string") return null;
+        const t = s.trim().replace("%", "").replace(",", ".");
+        if (t === "" || isNaN(Number(t))) return null;
+        return Number(t);
+      }
+
+      function hasAns(q, ans) {
+        if (q.type === "matching") {
+          const o = ans || {};
+          return q.pairs.every((p) => o[p.left] && o[p.left] !== "");
+        }
+        if (q.type === "sequence") return !!ans && ans.length === q.items.length;
+        if (q.type === "fill") return typeof ans === "string" && ans.trim() !== "";
+        return ans !== null && ans !== undefined;
+      }
+
+      function isCorrectAns(q, ans) {
+        if (ans === null || ans === undefined) return false;
+        if (q.type === "matching") return q.pairs.every((p) => ans[p.left] === p.right);
+        if (q.type === "sequence")
+          return Array.isArray(ans) && ans.every((id, i) => id === q.correctOrder[i]);
+        if (q.type === "fill") {
+          const v = parseNum(ans);
+          return v !== null && Math.abs(v - q.answer) <= (q.tolerance ?? 0.01);
+        }
+        if (Array.isArray(q.correct))
+          return (
+            Array.isArray(ans) &&
+            ans.length === q.correct.length &&
+            ans.every((val) => q.correct.includes(val))
+          );
+        return ans === q.correct;
+      }
+
+      // -------- PHẦN GIAO DIỆN VÀ LOGIC THI (GIỮ NGUYÊN CẤU TRÚC NHƯ INDEX.HTML) ----------
+      const themeSwitch = document.getElementById("themeSwitch");
+      if (localStorage.getItem("theme") === "dark")
+        document.body.classList.add("dark-mode");
+      themeSwitch.onclick = () => {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem(
+          "theme",
+          document.body.classList.contains("dark-mode") ? "dark" : "light",
+        );
+      };
+
+      let currentQuestions = [],
+        userAnswers = [],
+        currentQuestionIndex = 0,
+        examStartTime,
+        timerInterval,
+        isExamFinished = false;
+      let TOTAL_TIME = 20 * 60; // default 20 phút
+      let currentSetVal = "0";
+      const homePage = document.getElementById("homePage"),
+        examPage = document.getElementById("examPage");
+      const startExamBtn = document.getElementById("startExamBtn"),
+        backToHomeBtn = document.getElementById("backToHomeBtn");
+      const questionText = document.getElementById("questionText"),
+        optionsContainer = document.getElementById("optionsContainer");
+      const Area = document.getElementById("Area"),
+        prevBtn = document.getElementById("prevBtn"),
+        nextBtn = document.getElementById("nextBtn");
+      const submitBtnBottom = document.getElementById("submitBtnBottom"),
+        questionGrid = document.getElementById("questionGrid");
+      const answeredCounter = document.getElementById("answeredCounter"),
+        submitExamBtn = document.getElementById("submitExamBtn");
+      const timerDisplay = document.getElementById("timerDisplay"),
+        resultPanel = document.getElementById("resultPanel");
+      const goToHomeBtn = document.getElementById("goToHomeBtn"),
+        goToHistoryBtn = document.getElementById("goToHistoryBtn");
+
+      const instantResultToggle = document.getElementById(
+        "instantResultToggle",
+      );
+      window.instantResultEnabled = false;
+      window.instantResultEvaluated = {};
+
+      instantResultToggle.addEventListener("change", function (e) {
+        if (e.target.checked) {
+          const confirmInstant = confirm(
+            "Sau khi bật tính năng này, mỗi khi bạn chọn đáp án sẽ hiển thị kết quả đúng/sai ngay lập tức. Bạn có muốn tiếp tục?",
+          );
+          if (confirmInstant) {
+            window.instantResultEnabled = true;
+          } else {
+            e.target.checked = false;
+            window.instantResultEnabled = false;
+          }
+        } else {
+          window.instantResultEnabled = false;
+        }
+        if (currentQuestions.length > 0) {
+          displayQuestion(currentQuestionIndex);
+        }
+      });
+      const questionSetSelect = document.getElementById("questionSetSelect");
+      const startTimeStrSpan = document.getElementById("startTimeStr"),
+        endTimeStrSpan = document.getElementById("endTimeStr");
+      const durationStrSpan = document.getElementById("durationStr"),
+        scoreDetailSpan = document.getElementById("scoreDetail");
+      const scorePercentSpan = document.getElementById("scorePercent");
+
+      function startExam() {
+        currentQuestions = getQuestionSet();
+        currentSetVal = document.getElementById("questionSetSelect").value;
+        TOTAL_TIME = (TIME_MIN[currentSetVal] || 20) * 60;
+        timerDisplay.textContent = `${String(TIME_MIN[currentSetVal] || 20).padStart(2, "0")}:00`;
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        window.instantResultEvaluated = {};
+        currentQuestionIndex = 0;
+        isExamFinished = false;
+        examStartTime = new Date();
+        homePage.style.display = "none";
+        examPage.style.display = "block";
+        displayQuestion(0);
+        updateQuestionGrid();
+        startTimer();
+        resultPanel.style.display = "none";
+        submitExamBtn.style.display = "block";
+        submitBtnBottom.style.display = "none";
+      }
+
+      function displayQuestion(index) {
+        if (index < 0 || index >= currentQuestions.length) return;
+        currentQuestionIndex = index;
+        const q = currentQuestions[index];
+        const isMulti = Array.isArray(q.correct);
+
+        let html = `<div class="question-text"><div style="font-size:0.72rem;font-weight:600;color:#64748b;margin-bottom:6px">${q.sectionTitle ? "PHẦN " + q.section + " • " + q.sectionTitle : ""}</div>Câu ${index + 1}: ${q.text}`;
+        if (isMulti) {
+          html += ` <i style="font-size: 0.85em; font-weight: normal; color: #d03a3a;">(Chọn ${q.correct.length} đáp án)</i>`;
+        }
+        html += `</div>`;
+
+        if (q.image)
+          html += `<img src="${q.image}" style="max-width:100%; border-radius:8px; margin-bottom:16px;">`;
+        questionText.innerHTML = html;
+        optionsContainer.innerHTML = "";
+
+        const isQuestionEvaluated =
+          isExamFinished ||
+          (window.instantResultEnabled &&
+            window.instantResultEvaluated &&
+            window.instantResultEvaluated[index]);
+
+        if (q.type === "matching") {
+          if (!userAnswers[index]) userAnswers[index] = {};
+
+          // Get shuffled rights only once per question render (or static)
+          const allRights = q.pairs
+            .map((p) => p.right)
+            .sort((a, b) => a.localeCompare(b));
+
+          q.pairs.forEach((pair, i) => {
+            const rowDiv = document.createElement("div");
+            rowDiv.style.display = "flex";
+            rowDiv.style.alignItems = "center";
+            rowDiv.style.justifyContent = "space-between";
+            rowDiv.style.marginBottom = "10px";
+            rowDiv.style.padding = "10px";
+            rowDiv.style.border = "1px solid #ccc";
+            rowDiv.style.borderRadius = "4px";
+
+            const leftDiv = document.createElement("div");
+            leftDiv.style.fontWeight = "bold";
+            leftDiv.style.flex = "1";
+            leftDiv.textContent = pair.left;
+
+            const rightSelect = document.createElement("select");
+            rightSelect.style.flex = "2";
+            rightSelect.style.padding = "8px";
+            rightSelect.style.borderRadius = "4px";
+            rightSelect.style.border = "1px solid #ccc";
+            if (isQuestionEvaluated) rightSelect.disabled = true;
+
+            const defaultOpt = document.createElement("option");
+            defaultOpt.value = "";
+            defaultOpt.textContent = "-- Chọn ý nghĩa tương ứng --";
+            rightSelect.appendChild(defaultOpt);
+
+            allRights.forEach((r) => {
+              const opt = document.createElement("option");
+              opt.value = r;
+              opt.textContent = r;
+              rightSelect.appendChild(opt);
+            });
+
+            if (userAnswers[index][pair.left]) {
+              rightSelect.value = userAnswers[index][pair.left];
+            }
+
+            rightSelect.onchange = (e) => {
+              userAnswers[index][pair.left] = e.target.value;
+
+              if (window.instantResultEnabled) {
+                const allSelected = q.pairs.every(
+                  (p) =>
+                    userAnswers[index][p.left] &&
+                    userAnswers[index][p.left] !== "",
+                );
+                if (allSelected) {
+                  if (!window.instantResultEvaluated)
+                    window.instantResultEvaluated = {};
+                  window.instantResultEvaluated[index] = true;
+                }
+              }
+
+              updateQuestionGrid();
+              displayQuestion(index);
+            };
+
+            if (isQuestionEvaluated) {
+              const isAnsCorrect = userAnswers[index][pair.left] === pair.right;
+              rowDiv.style.backgroundColor = isAnsCorrect
+                ? "#d4edda"
+                : "#f8d7da";
+              if (!isAnsCorrect) {
+                const correctLabel = document.createElement("div");
+                correctLabel.style.color = "red";
+                correctLabel.style.fontSize = "0.9em";
+                correctLabel.style.marginTop = "5px";
+                correctLabel.textContent = `Đúng: ${pair.right}`;
+                leftDiv.appendChild(correctLabel);
+              }
+            }
+
+            rowDiv.appendChild(leftDiv);
+            rowDiv.appendChild(rightSelect);
+            optionsContainer.appendChild(rowDiv);
+          });
+        } else if (q.type === "fill") {
+          const wrap = document.createElement("div");
+          wrap.style.display = "flex";
+          wrap.style.alignItems = "center";
+          wrap.style.gap = "10px";
+          wrap.style.flexWrap = "wrap";
+
+          const lbl = document.createElement("span");
+          lbl.style.fontWeight = "600";
+          lbl.textContent = "Trả lời:";
+
+          const input = document.createElement("input");
+          input.type = "text";
+          input.inputMode = "decimal";
+          input.autocomplete = "off";
+          input.placeholder = "Nhập số";
+          input.style.cssText =
+            "padding:8px 14px;border-radius:20px;border:1px solid #cbd5e1;width:160px;font-size:0.95rem;background:#fff;color:#1e293b";
+          input.value = userAnswers[index] || "";
+          if (isQuestionEvaluated) {
+            input.disabled = true;
+            const ok = isCorrectAns(q, userAnswers[index]);
+            input.style.background = ok ? "#dcfce7" : "#fee2e2";
+            input.style.borderColor = ok ? "#22c55e" : "#ef4444";
+          }
+          input.oninput = (e) => {
+            const v = e.target.value;
+            userAnswers[index] = v.trim() === "" ? null : v;
+            updateQuestionGrid();
+          };
+          input.onkeydown = (e) => {
+            if (e.key === "Enter") checkFill(index);
+          };
+
+          wrap.appendChild(lbl);
+          wrap.appendChild(input);
+          if (q.unit) {
+            const u = document.createElement("span");
+            u.textContent = q.unit;
+            wrap.appendChild(u);
+          }
+          if (window.instantResultEnabled && !isQuestionEvaluated) {
+            const chk = document.createElement("button");
+            chk.className = "nav-btn";
+            chk.textContent = "Kiểm tra";
+            chk.onclick = () => checkFill(index);
+            wrap.appendChild(chk);
+          }
+          if (isQuestionEvaluated && !isCorrectAns(q, userAnswers[index])) {
+            const c = document.createElement("span");
+            c.style.color = "#ef4444";
+            c.style.fontWeight = "600";
+            c.textContent = `Đúng: ${q.answer}${q.unit ? " " + q.unit : ""}`;
+            wrap.appendChild(c);
+          }
+          optionsContainer.appendChild(wrap);
+        } else if (q.type === "sequence") {
+          // Khởi tạo mảng thứ tự nếu chưa chọn lần nào (đặt ngẫu nhiên hoặc theo thứ tự gốc)
+          if (!userAnswers[index]) {
+            userAnswers[index] = [...q.items.map((item) => item.id)];
+          }
+
+          userAnswers[index].forEach((id, i) => {
+            const itemObj = q.items.find((it) => it.id === id);
+            const rowDiv = document.createElement("div");
+            rowDiv.style.display = "flex";
+            rowDiv.style.alignItems = "center";
+            rowDiv.style.justifyContent = "space-between";
+            rowDiv.style.marginBottom = "5px";
+            rowDiv.style.padding = "10px";
+            rowDiv.style.border = "1px solid #ccc";
+            rowDiv.style.borderRadius = "4px";
+            rowDiv.style.backgroundColor = isQuestionEvaluated
+              ? id === q.correctOrder[i]
+                ? "#d4edda"
+                : "#f8d7da"
+              : "#fdfdfd";
+
+            const leftDiv = document.createElement("div");
+            leftDiv.style.display = "flex";
+            leftDiv.style.alignItems = "center";
+            leftDiv.style.flex = "1";
+
+            const idxSpan = document.createElement("span");
+            idxSpan.style.fontWeight = "bold";
+            idxSpan.style.marginRight = "10px";
+            idxSpan.style.color = "#007bff";
+            idxSpan.textContent = `Bước ${i + 1}.`;
+
+            const txtSpan = document.createElement("span");
+            txtSpan.style.color = "black";
+            txtSpan.textContent = itemObj.text;
+
+            leftDiv.appendChild(idxSpan);
+            leftDiv.appendChild(txtSpan);
+
+            rowDiv.appendChild(leftDiv);
+
+            if (!isQuestionEvaluated) {
+              rowDiv.draggable = true;
+              rowDiv.style.cursor = "grab";
+
+              rowDiv.ondragstart = (e) => {
+                e.dataTransfer.setData("text/plain", i);
+                rowDiv.style.opacity = "0.5";
+              };
+
+              rowDiv.ondragend = (e) => {
+                rowDiv.style.opacity = "1";
+              };
+
+              rowDiv.ondragover = (e) => {
+                e.preventDefault();
+                rowDiv.style.borderTop = "2px solid #007bff";
+              };
+
+              rowDiv.ondragleave = (e) => {
+                rowDiv.style.borderTop = "1px solid #ccc";
+              };
+
+              rowDiv.ondrop = (e) => {
+                e.preventDefault();
+                rowDiv.style.borderTop = "1px solid #ccc";
+                const draggedIndex = parseInt(
+                  e.dataTransfer.getData("text/plain"),
+                );
+                if (draggedIndex !== i) {
+                  const items = userAnswers[index];
+                  const [draggedItem] = items.splice(draggedIndex, 1);
+                  items.splice(i, 0, draggedItem);
+                  // Sequence doesn't have a clear "finished" action except submitting,
+                  // so we don't evaluate it instantly to avoid locking prematurely.
+                  displayQuestion(index);
+                  updateQuestionGrid();
+                }
+              };
+            } else {
+              rowDiv.style.cursor = "default";
+            }
+
+            optionsContainer.appendChild(rowDiv);
+          });
+        } else {
+          q.options.forEach((opt, i) => {
+            const div = document.createElement("div");
+            div.className = "option-item";
+
+            let isSelected = false;
+            if (isMulti) {
+              isSelected = userAnswers[index] && userAnswers[index].includes(i);
+            } else {
+              isSelected = userAnswers[index] === i;
+            }
+            if (isSelected) div.classList.add("selected");
+
+            if (isQuestionEvaluated) {
+              let isCorrectOption = false;
+              if (isMulti) isCorrectOption = q.correct.includes(i);
+              else isCorrectOption = q.correct === i;
+
+              if (isCorrectOption) div.classList.add("correct-after");
+              else if (isSelected) div.classList.add("wrong-after");
+            }
+
+            const checkboxHtml = isMulti
+              ? `<input type="checkbox" ${isSelected ? "checked" : ""} style="margin-right: 10px; cursor: pointer; pointer-events: none;"> `
+              : "";
+            let optHtml = opt;
+            if (
+              typeof opt === "string" &&
+              opt.match(/^(ẢnhNNHT|media)\/.*\.(png|jpg|jpeg|gif)$/i)
+            ) {
+              optHtml = `<img src="${opt}" style="max-height:80px; max-width:100%; vertical-align:middle; border-radius:4px;">`;
+            }
+            div.innerHTML = `${checkboxHtml}<span class="option-prefix">${String.fromCharCode(65 + i)}.</span> ${optHtml}`;
+            if (!isQuestionEvaluated)
+              div.onclick = () => selectOption(index, i, isMulti);
+            optionsContainer.appendChild(div);
+          });
+        }
+        updateNavButtons();
+        updateQuestionGrid();
+        update();
+      }
+
+      function checkFill(idx) {
+        if (isExamFinished || !window.instantResultEnabled) return;
+        if (!hasAns(currentQuestions[idx], userAnswers[idx])) return;
+        window.instantResultEvaluated = window.instantResultEvaluated || {};
+        window.instantResultEvaluated[idx] = true;
+        displayQuestion(idx);
+      }
+
+      function selectOption(qIdx, optIdx, isMulti) {
+        if (
+          isExamFinished ||
+          (window.instantResultEnabled &&
+            window.instantResultEvaluated &&
+            window.instantResultEvaluated[qIdx])
+        )
+          return;
+
+        let shouldEvaluateNow = false;
+
+        if (isMulti) {
+          if (!userAnswers[qIdx] || !Array.isArray(userAnswers[qIdx]))
+            userAnswers[qIdx] = [];
+          const idx = userAnswers[qIdx].indexOf(optIdx);
+          if (idx > -1) userAnswers[qIdx].splice(idx, 1);
+          else userAnswers[qIdx].push(optIdx);
+          if (userAnswers[qIdx].length === 0) userAnswers[qIdx] = null;
+
+          if (
+            userAnswers[qIdx] &&
+            userAnswers[qIdx].length === currentQuestions[qIdx].correct.length
+          ) {
+            shouldEvaluateNow = true;
+          }
+        } else {
+          userAnswers[qIdx] = optIdx;
+          shouldEvaluateNow = true;
+        }
+
+        if (window.instantResultEnabled && shouldEvaluateNow) {
+          if (!window.instantResultEvaluated)
+            window.instantResultEvaluated = {};
+          window.instantResultEvaluated[qIdx] = true;
+        }
+
+        displayQuestion(qIdx);
+      }
+
+      function updateNavButtons() {
+        prevBtn.disabled = currentQuestionIndex === 0;
+        nextBtn.disabled = currentQuestionIndex === currentQuestions.length - 1;
+        submitBtnBottom.style.display =
+          currentQuestionIndex === currentQuestions.length - 1 &&
+          !isExamFinished
+            ? "block"
+            : "none";
+      }
+
+      function updateQuestionGrid() {
+        questionGrid.innerHTML = "";
+        let answered = 0;
+        for (let i = 0; i < currentQuestions.length; i++) {
+          const q = currentQuestions[i];
+          const qDiv = document.createElement("div");
+          qDiv.className = "q-num";
+          qDiv.textContent = i + 1;
+          qDiv.onclick = () => displayQuestion(i);
+          if (i === currentQuestionIndex) qDiv.classList.add("current");
+
+          if (hasAns(q, userAnswers[i])) {
+            answered++;
+            const isEvaluated =
+              isExamFinished ||
+              (window.instantResultEnabled &&
+                window.instantResultEvaluated &&
+                window.instantResultEvaluated[i]);
+            if (!isEvaluated) qDiv.classList.add("selected");
+            else qDiv.classList.add(isCorrectAns(q, userAnswers[i]) ? "correct" : "wrong");
+          }
+          questionGrid.appendChild(qDiv);
+        }
+        answeredCounter.textContent = `${answered}/${currentQuestions.length}`;
+      }
+
+      function update() {
+        Area.style.display = "none";
+        const evaluated =
+          isExamFinished ||
+          (window.instantResultEnabled &&
+            window.instantResultEvaluated &&
+            window.instantResultEvaluated[currentQuestionIndex]);
+        if (!evaluated) return;
+        const q = currentQuestions[currentQuestionIndex];
+        const ans = userAnswers[currentQuestionIndex];
+        if (ans === null || ans === undefined) return;
+        Area.style.display = "block";
+
+        let correctStr = "";
+        if (q.type === "matching") correctStr = "Xem từng dòng ở trên để biết đáp án đúng";
+        else if (q.type === "sequence") correctStr = "Xem màu nền của từng dòng phía trên";
+        else if (q.type === "fill") correctStr = `${q.answer}${q.unit ? " " + q.unit : ""}`;
+        else if (Array.isArray(q.correct))
+          correctStr = q.correct.map((idx) => String.fromCharCode(65 + idx)).join(", ");
+        else correctStr = String.fromCharCode(65 + q.correct);
+
+        if (isCorrectAns(q, ans)) {
+          Area.className = "-area -correct show";
+          Area.innerHTML = `<strong>✔ Đúng</strong> ${q.explanation || ""}`;
+        } else {
+          Area.className = "-area -wrong show";
+          Area.innerHTML = `<strong>✘ Sai</strong> Đáp án đúng: ${correctStr}. ${q.explanation || ""}`;
+        }
+      }
+
+      function startTimer() {
+        let timeLeft = TOTAL_TIME;
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+          timeLeft--;
+          const mm = Math.floor(timeLeft / 60),
+            ss = timeLeft % 60;
+          timerDisplay.textContent = `${mm.toString().padStart(2, "0")}:${ss.toString().padStart(2, "0")}`;
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            alert("Hết thời gian làm bài! Hệ thống sẽ tự động nộp bài.");
+            submitExam(true);
+          }
+        }, 1000);
+      }
+
+      function submitExam(isAuto = false) {
+        if (isAuto !== true && !confirm("Bạn có chắc chắn muốn nộp bài ngay?"))
+          return;
+        clearInterval(timerInterval);
+        isExamFinished = true;
+        let correctCount = 0;
+        for (let i = 0; i < currentQuestions.length; i++) {
+          if (isCorrectAns(currentQuestions[i], userAnswers[i])) correctCount++;
+        }
+        const score = (correctCount / currentQuestions.length) * 100;
+        const endTime = new Date();
+        const durationSec = Math.round((endTime - examStartTime) / 1000);
+        const durationStr = `${Math.floor(durationSec / 60)} phút ${durationSec % 60} giây`;
+        const historyItem = {
+          id: Date.now(),
+          startTimeStr: examStartTime.toLocaleString(),
+          endTimeStr: endTime.toLocaleString(),
+          durationStr: durationStr,
+          correctCount,
+          totalCount: currentQuestions.length,
+          score,
+          userAnswers: [...userAnswers],
+          setVal: currentSetVal,
+          setLabel:
+            currentSetVal === "0"
+              ? "Tất cả 5 phần"
+              : "Phần " + currentSetVal + ": " + currentQuestions[0].sectionTitle,
+        };
+        const history = JSON.parse(
+          localStorage.getItem("mlExamHistory") || "[]",
+        );
+        history.push(historyItem);
+        localStorage.setItem("mlExamHistory", JSON.stringify(history));
+        startTimeStrSpan.textContent = historyItem.startTimeStr;
+        endTimeStrSpan.textContent = historyItem.endTimeStr;
+        durationStrSpan.textContent = historyItem.durationStr;
+        scoreDetailSpan.textContent = `${correctCount}/${currentQuestions.length}`;
+        scorePercentSpan.textContent = `${score.toFixed(2)}/100.00`;
+        resultPanel.style.display = "block";
+        submitExamBtn.style.display = "none";
+        submitBtnBottom.style.display = "none";
+        displayQuestion(currentQuestionIndex);
+        loadHistorySummary();
+      }
+
+      function goHome() {
+        if (!isExamFinished && !confirm("Thoát sẽ mất tiến độ. Tiếp tục?"))
+          return;
+        clearInterval(timerInterval);
+        homePage.style.display = "block";
+        examPage.style.display = "none";
+        document.querySelector('.tab-btn[data-tab="new-exam"]').click();
+      }
+
+      function goHistory() {
+        if (!isExamFinished && !confirm("Thoát về lịch sử?")) return;
+        clearInterval(timerInterval);
+        homePage.style.display = "block";
+        examPage.style.display = "none";
+        document.querySelector('.tab-btn[data-tab="history-summary"]').click();
+        loadHistorySummary();
+      }
+
+      function loadHistorySummary() {
+        const history = JSON.parse(
+          localStorage.getItem("mlExamHistory") || "[]",
+        );
+        const tbody = document.getElementById("historySummaryBody");
+        tbody.innerHTML = "";
+        if (history.length === 0) {
+          tbody.innerHTML =
+            "<tr><td colspan='4' style='text-align:center'>Chưa có lịch sử</td></tr>";
+          return;
+        }
+        history
+          .slice()
+          .reverse()
+          .forEach((item, idx) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>Lần ${history.length - idx}<br><span style="font-size:0.7rem">${item.setLabel || ""}</span></td><td><span style="color: #28a745; font-weight: 500;">Đã kết thúc</span><br><span style="font-size:0.7rem">${item.endTimeStr}</span></td><td>${item.score.toFixed(2)}</td><td><a class="review-link" data-id="${item.id}" href="#">Xem lại</a></td>`;
+            tbody.appendChild(tr);
+          });
+        document.querySelectorAll(".review-link").forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const id = parseInt(link.getAttribute("data-id"));
+            reviewExam(id);
+          });
+        });
+      }
+
+      function reviewExam(id) {
+        const history = JSON.parse(
+          localStorage.getItem("mlExamHistory") || "[]",
+        );
+        const item = history.find((i) => i.id === id);
+        if (!item) return;
+        clearInterval(timerInterval);
+        currentQuestions = getQuestionSet(item.setVal !== undefined ? item.setVal : "0");
+        userAnswers =
+          item.userAnswers || new Array(currentQuestions.length).fill(null);
+        isExamFinished = true;
+        examStartTime = new Date(item.startTimeStr);
+        homePage.style.display = "none";
+        examPage.style.display = "block";
+        resultPanel.style.display = "block";
+        startTimeStrSpan.textContent = item.startTimeStr;
+        endTimeStrSpan.textContent = item.endTimeStr;
+        durationStrSpan.textContent = item.durationStr;
+        scoreDetailSpan.textContent = `${item.correctCount}/${item.totalCount}`;
+        scorePercentSpan.textContent = `${item.score.toFixed(2)}/100.00`;
+        submitExamBtn.style.display = "none";
+        submitBtnBottom.style.display = "none";
+        displayQuestion(0);
+        updateQuestionGrid();
+      }
+
+      startExamBtn.onclick = startExam;
+      backToHomeBtn.onclick = goHome;
+      prevBtn.onclick = () => displayQuestion(currentQuestionIndex - 1);
+      nextBtn.onclick = () => displayQuestion(currentQuestionIndex + 1);
+
+      document.addEventListener("keydown", (e) => {
+        if (
+          examPage.style.display === "block" &&
+          !["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)
+        ) {
+          if (e.key === "ArrowLeft") {
+            displayQuestion(currentQuestionIndex - 1);
+          } else if (e.key === "ArrowRight") {
+            displayQuestion(currentQuestionIndex + 1);
+          }
+        }
+      });
+
+      submitExamBtn.onclick = () => submitExam(false);
+      submitBtnBottom.onclick = () => submitExam(false);
+      goToHomeBtn.onclick = goHome;
+      goToHistoryBtn.onclick = goHistory;
+
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.onclick = () => {
+          document
+            .querySelectorAll(".tab-btn")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          document
+            .querySelectorAll(".tab-content")
+            .forEach((c) => c.classList.remove("active"));
+          document
+            .getElementById(btn.getAttribute("data-tab") + "Tab")
+            .classList.add("active");
+          if (btn.getAttribute("data-tab") === "history-summary")
+            loadHistorySummary();
+        };
+      });
+      loadHistorySummary();
+    </script>
+  </body>
+</html>
